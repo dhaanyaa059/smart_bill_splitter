@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DHAANYAA'S STUDIO — Smart Splitting Bill</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <canvas id="confetti-canvas"></canvas>
+
+    <div id="login-screen" class="login-page">
+        <div class="login-card">
+            <div class="login-brand">
+                <span class="brand-tag">✨ DHAANYAA'S STUDIO ✨</span>
+                <h1>Smart Splitting Bill</h1>
+                <p class="login-tagline">Cute, structured, and effortless bill sharing</p>
+            </div>
+            <div class="pixel-food-strip" aria-hidden="true">
+                <span class="pixel-icon">🍕</span>
+                <span class="pixel-icon">🍔</span>
+                <span class="pixel-icon">🍜</span>
+                <span class="pixel-icon">🍣</span>
+                <span class="pixel-icon">🥤</span>
+                <span class="pixel-icon">☕</span>
+                <span class="pixel-icon">🍰</span>
+                <span class="pixel-icon">🌮</span>
+            </div>
+            <div class="login-details">
+                <h2>About the Studio</h2>
+                <p>
+                    <strong>Dhaanyaa's Studio</strong> is a boutique bill-splitting space made for friends,
+                    food runs, and shared moments. Turn messy group bills into clean, print-ready invoices
+                    with taxes, tips, discounts, and fair splits — all in one cute flow.
+                </p>
+                <ul class="feature-list">
+                    <li><span class="feat-icon">📋</span> Initialize ledgers with dining & payment type</li>
+                    <li><span class="feat-icon">👯</span> Add besties and assign every menu item</li>
+                    <li><span class="feat-icon">💖</span> Quick tips, taxes & discounts in one place</li>
+                    <li><span class="feat-icon">🧾</span> Generate a pretty invoice with share breakdown</li>
+                </ul>
+            </div>
+            <div class="login-form">
+                <label for="guest-name">Your name (optional)</label>
+                <input type="text" id="guest-name" placeholder="e.g., Dhaanyaa" maxlength="40">
+                <button type="button" class="btn-retro-primary" id="enter-studio-btn">
+                    Enter Studio ➔
+                </button>
+                <p class="login-note">No account needed — just hop in and start splitting.</p>
+            </div>
+        </div>
+        <p class="login-footer">© DHAANYAA'S STUDIO · Smart Splitting Bill</p>
+    </div>
+
+    <div id="main-app" class="app-container hidden">
+        <header class="studio-header">
+            <span class="brand-tag">✨ DHAANYAA'S STUDIO ✨</span>
+            <h1>Smart Splitting Bill</h1>
+            <p>Cute, structured, and effortless bill sharing</p>
+            <div class="pixel-food-strip" aria-hidden="true">
+                <span class="pixel-icon">🍕</span>
+                <span class="pixel-icon">🍔</span>
+                <span class="pixel-icon">🍜</span>
+                <span class="pixel-icon">🍣</span>
+                <span class="pixel-icon">🥤</span>
+                <span class="pixel-icon">☕</span>
+                <span class="pixel-icon">🍰</span>
+                <span class="pixel-icon">🌮</span>
+            </div>
+            <p id="welcome-guest" class="welcome-guest hidden"></p>
+        </header>
+
+        <div id="status-banner" class="banner hidden"></div>
+
+        <div class="invoice-page-frame">
+
+            <div class="page-section" id="bill-setup">
+                <div class="stamp-header-bar">
+                    <span class="stamp-badge">Step 01 🌸 Initialize Ledger</span>
+                    <h2>What are we splitting today?</h2>
+                </div>
+                <div class="input-group">
+                    <label>Event / Restaurant Name</label>
+                    <input type="text" id="bill-name" placeholder="e.g., Korean BBQ Night 🥢">
+                </div>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label>Dining Type</label>
+                        <select id="bill-dining-type" class="studio-select">
+                            <option value="Dine-In Table">🍴 Dine-In Table</option>
+                            <option value="Online Order">🛍️ Online Order</option>
+                            <option value="Takeaway">🥡 Takeaway</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Transaction Type</label>
+                        <select id="bill-transaction-type" class="studio-select">
+                            <option value="Cash">💵 Cash</option>
+                            <option value="Card">💳 Card</option>
+                            <option value="Net Banking">🏦 Net Banking</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Invoice No.</label>
+                    <input type="text" id="bill-order-no" placeholder="000123456789">
+                </div>
+                <div class="section-divider"></div>
+                <h3 class="subsection-title">Taxes, Discounts & Tips 💖</h3>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label>Tax Amount (₹)</label>
+                        <input type="number" id="bill-tax" placeholder="0.00">
+                    </div>
+                    <div class="input-group">
+                        <label>Discount (₹)</label>
+                        <input type="number" id="bill-discount" placeholder="0.00">
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Quick Tip Selector ✨</label>
+                    <div class="tip-button-group">
+                        <button type="button" class="btn-tip" onclick="setTipPercentage(10)">10%</button>
+                        <button type="button" class="btn-tip" onclick="setTipPercentage(20)">20%</button>
+                        <button type="button" class="btn-tip" onclick="setTipPercentage(30)">30%</button>
+                        <button type="button" class="btn-tip active" onclick="setTipPercentage(0)">None</button>
+                    </div>
+                    <input type="number" id="bill-tip" placeholder="Custom Tip Amount (₹)" style="margin-top: 10px;">
+                </div>
+                <button type="button" class="btn-retro-primary" onclick="createBill(event)">Proceed to Besties & Items ➔</button>
+            </div>
+
+            <div class="page-section hidden" id="workflow-section">
+                <div class="stamp-header-bar">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span class="stamp-badge">Step 02 🎈 Items & Stakeholders</span>
+                        <span id="current-bill-title" style="font-weight: 800; font-size: 0.9rem; color: #3b5bdb;"></span>
+                    </div>
+                    <h2>Build Your Bill Ledger</h2>
+                </div>
+                
+                <div class="split-grid">
+                    <div class="workspace-subpanel">
+                        <h4>👯‍♀️ Add Stakeholders</h4>
+                        <div class="input-row-inline">
+                            <input type="text" id="person-name" placeholder="Bestie Name">
+                            <button type="button" class="btn-sub-action" onclick="addPerson(event)">Add</button>
+                        </div>
+                        <ul id="people-list" class="styled-list"></ul>
+                    </div>
+
+                    <div class="workspace-subpanel">
+                        <h4>🍱 Add Menu Items</h4>
+                        <div class="input-row-inline">
+                            <input type="text" id="item-name" placeholder="Item Description" style="flex: 2;">
+                            <input type="number" id="item-qty" placeholder="Qty" value="2" style="flex: 1; min-width: 55px;">
+                        </div>
+                        <input type="number" id="item-price" placeholder="Total Price (₹)" style="margin-bottom: 10px;">
+                        <div class="checkbox-container">
+                            <div class="checkbox-header-row">
+                                <span class="label-small" style="margin-bottom:0;">Assigned To + how many each had 👇</span>
+                                <label class="select-all-label">
+                                    <input type="checkbox" id="select-all-checkbox" onchange="toggleSelectAll(this)"> Select All
+                                </label>
+                            </div>
+                            <div id="item-assignments-checkboxes" style="margin-top: 6px;"></div>
+                        </div>
+                        <button type="button" class="btn-sub-action" onclick="addItem(event)">Record Item 🛒</button>
+                        <ul id="items-list" class="styled-list"></ul>
+                    </div>
+                </div>
+
+                <div class="payer-section">
+                    <h3 class="subsection-title">Who is paying the bill? 💳</h3>
+                    <p class="payer-hint">Leave all unchecked = everyone pays their own share. Select 1 or more people who will pay at the counter — others settle with them.</p>
+                    <div id="payer-checkboxes" class="payer-checkboxes"></div>
+                </div>
+
+                <button type="button" class="btn-retro-success" onclick="getSummary(event)">Generate Final Invoice 🧾✨</button>
+
+                <div class="order-history-panel" id="order-history-panel">
+                    <div class="stamp-header-bar" style="margin-top: 22px;">
+                        <span class="stamp-badge">Order History 📜</span>
+                        <h2 style="font-size: 1.15rem;">Previous Bill Splits</h2>
+                    </div>
+                    <div id="order-history-list"></div>
+                    <button type="button" class="btn-sub-action" style="margin-top: 10px; padding: 8px 14px;" onclick="clearOrderHistory()">Clear History</button>
+                </div>
+            </div>
+
+            <div class="page-section hidden" id="summary-section">
+                <div id="summary-results"></div>
+                <button type="button" class="btn-retro-primary" style="margin-top: 25px;" onclick="location.reload()">✨ Split Another Bill ✨</button>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        document.getElementById('enter-studio-btn').addEventListener('click', function () {
+            const name = document.getElementById('guest-name').value.trim();
+            const welcome = document.getElementById('welcome-guest');
+            if (name) {
+                welcome.textContent = 'Welcome, ' + name + ' ✨';
+                welcome.classList.remove('hidden');
+            }
+            document.getElementById('login-screen').classList.add('hidden');
+            document.getElementById('main-app').classList.remove('hidden');
+        });
+        document.getElementById('guest-name').addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                document.getElementById('enter-studio-btn').click();
+            }
+        });
+    </script>
+</body>
+</html>
